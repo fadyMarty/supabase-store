@@ -19,10 +19,6 @@ class FavoritesViewModel @Inject constructor(
     private val _state = MutableStateFlow(FavoritesState())
     val state = _state.asStateFlow()
 
-    init {
-        getFavoriteSneakers()
-    }
-
     fun getFavoriteSneakers() {
         getFavoriteSneakers.execute().onEach { result ->
             when (result) {

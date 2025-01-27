@@ -28,7 +28,7 @@ import com.fadymarty.supabasesneakerstore.presentation.components.SneakersItem
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    topPadding: Dp = 0.dp,
+    innerPadding: PaddingValues,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsState().value
@@ -45,8 +45,9 @@ fun HomeScreen(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(
                 start = 8.dp,
-                top = topPadding,
-                end = 8.dp
+                top = innerPadding.calculateTopPadding(),
+                end = 8.dp,
+                bottom = innerPadding.calculateBottomPadding()
             ),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)

@@ -31,7 +31,7 @@ import com.fadymarty.supabasesneakerstore.presentation.components.SneakersItem
 @Composable
 fun FavoritesScreen(
     navController: NavHostController,
-    topPadding: Dp = 0.dp,
+    innerPadding: PaddingValues,
     viewModel: FavoritesViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsState().value
@@ -39,6 +39,7 @@ fun FavoritesScreen(
     LaunchedEffect(true) {
         viewModel.getFavoriteSneakers()
     }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -52,8 +53,9 @@ fun FavoritesScreen(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(
                 start = 8.dp,
-                top = topPadding,
-                end = 8.dp
+                top = innerPadding.calculateTopPadding(),
+                end = 8.dp,
+                bottom = innerPadding.calculateBottomPadding()
             ),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)

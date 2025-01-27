@@ -8,20 +8,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -49,7 +38,9 @@ import com.fadymarty.supabasesneakerstore.domain.model.navigation_drawer.opposit
 import com.fadymarty.supabasesneakerstore.presentation.details.DetailsScreen
 import com.fadymarty.supabasesneakerstore.presentation.favorites.FavoritesScreen
 import com.fadymarty.supabasesneakerstore.presentation.home.HomeScreen
-import com.fadymarty.supabasesneakerstore.presentation.navigation_drawer.NavigationDrawer
+import com.fadymarty.supabasesneakerstore.presentation.navigation.components.BottomNavigationBar
+import com.fadymarty.supabasesneakerstore.presentation.navigation.components.NavigationDrawer
+import com.fadymarty.supabasesneakerstore.presentation.navigation.components.SneakerStoreTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,7 +64,7 @@ fun MainNavigation() {
                 backStackState?.destination?.route == Screen.Favorites.route
     }
 
-    var drawerState by remember {
+    var drawerState by rememberSaveable {
         mutableStateOf(NavigationDrawerState.Closed)
     }
 
@@ -112,97 +103,51 @@ fun MainNavigation() {
                 },
             topBar = {
                 if (isBarsVisible) {
-                    CenterAlignedTopAppBar(
-                        title = {
-                            Text("Sneaker Store")
-                        },
-                        navigationIcon = {
-                            IconButton(
-                                onClick = {
-                                    drawerState = drawerState.opposite()
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Menu,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = Color.Black,
-                            titleContentColor = Color.White,
-                            navigationIconContentColor = Color.White
-                        )
+                    SneakerStoreTopBar(
+                        onNavigationIconClick = {
+                            drawerState = drawerState.opposite()
+                        }
                     )
                 }
             },
             bottomBar = {
                 if (isBarsVisible) {
-                    NavigationBar(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
-                    ) {
-                        bottomNavigationItems.forEachIndexed { index, item ->
-                            NavigationBarItem(
-                                selected = selectedItem == index,
-                                icon = {
-                                    Icon(
-                                        imageVector = if (selectedItem == index) {
-                                            item.selectedIcon
-                                        } else {
-                                            item.unselectedIcon
-                                        },
-                                        contentDescription = null
-                                    )
-                                },
-                                label = {
-                                    Text(
-                                        text = item.label
-                                    )
-                                },
-                                onClick = {
-                                    when (index) {
-                                        0 -> navigateToTap(
-                                            navController = navController,
-                                            route = Screen.Home.route
-                                        )
-
-                                        1 -> navigateToTap(
-                                            navController = navController,
-                                            route = Screen.Favorites.route
-                                        )
-                                    }
-                                },
-                                colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = Color.White,
-                                    unselectedIconColor = Color.White,
-                                    selectedTextColor = Color.White,
-                                    unselectedTextColor = Color.White,
-                                    indicatorColor = Color.DarkGray
+                    BottomNavigationBar(
+                        items = bottomNavigationItems,
+                        selectedItem = selectedItem,
+                        onItemClick = { index ->
+                            when (index) {
+                                0 -> navigateToTap(
+                                    navController = navController,
+                                    route = Screen.Home.route
                                 )
-                            )
+
+                                1 -> navigateToTap(
+                                    navController = navController,
+                                    route = Screen.Favorites.route
+                                )
+                            }
                         }
-                    }
+                    )
                 }
             }
         ) { innerPadding ->
             NavHost(
-                modifier = Modifier
-                    .padding(bottom = innerPadding.calculateBottomPadding()),
+                modifier = Modifier,
                 navController = navController,
                 startDestination = Screen.Home.route
             ) {
                 composable(Screen.Home.route) {
                     HomeScreen(
                         navController = navController,
-                        topPadding = innerPadding.calculateTopPadding()
+                        innerPadding = innerPadding
                     )
                 }
 
                 composable(Screen.Favorites.route) {
                     FavoritesScreen(
                         navController = navController,
-                        topPadding = innerPadding.calculateTopPadding()
+                        innerPadding = innerPadding
                     )
                 }
 

@@ -1,4 +1,4 @@
-package com.fadymarty.supabasesneakerstore.presentation.navigation_drawer
+package com.fadymarty.supabasesneakerstore.presentation.navigation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,6 +12,6 @@ fun NavigationDrawer() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Red)
+            .background(Color.DarkGray)
     )
 }

@@ -8,8 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.fadymarty.supabasesneakerstore.common.ui.theme.SupabaseSneakerStoreTheme
-import com.fadymarty.supabasesneakerstore.presentation.favorites.FavoritesScreen
-import com.fadymarty.supabasesneakerstore.presentation.navigation.MainNavigation
 import com.fadymarty.supabasesneakerstore.presentation.navigation.NavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +17,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_SupabaseSneakerStore)
         enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(
+                Color.Transparent.toArgb(), Color.Transparent.toArgb()
+            ),
             navigationBarStyle = SystemBarStyle.light(
                 Color.Transparent.toArgb(), Color.Transparent.toArgb()
             )

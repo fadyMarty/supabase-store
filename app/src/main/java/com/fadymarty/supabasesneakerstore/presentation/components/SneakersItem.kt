@@ -31,10 +31,9 @@ fun SneakersItem(
     sneakers: Sneakers,
     navController: NavHostController,
 ) {
-    Box(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    Box(modifier = Modifier.fillMaxWidth()) {
         Card(
+            modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFFEAEEEF)
             ),
@@ -43,8 +42,9 @@ fun SneakersItem(
             },
             shape = RoundedCornerShape(20.dp)
         ) {
-            Box {
+            Box(modifier = Modifier.fillMaxWidth()) {
                 AsyncImage(
+                    modifier = Modifier.fillMaxWidth(),
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(sneakers.imageUrl)
                         .build(),

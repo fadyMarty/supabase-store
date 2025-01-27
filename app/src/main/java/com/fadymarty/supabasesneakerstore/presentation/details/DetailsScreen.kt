@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
@@ -43,6 +46,8 @@ fun DetailsScreen(
 ) {
     val state = viewModel.state.collectAsState().value
 
+    val scrollState = rememberScrollState()
+
     LaunchedEffect(key1 = true) {
         viewModel.getSneakersById(id)
     }
@@ -58,6 +63,7 @@ fun DetailsScreen(
                     .fillMaxSize()
                     .background(Color(0xFFEAEEEF))
                     .padding(horizontal = 16.dp)
+                    .verticalScroll(scrollState)
             ) {
                 Box {
                     AsyncImage(
