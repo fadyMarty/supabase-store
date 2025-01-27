@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -27,13 +28,13 @@ import com.fadymarty.supabasesneakerstore.presentation.navigation.Screen
 
 @Composable
 fun SneakersItem(
-    modifier: Modifier = Modifier,
     sneakers: Sneakers,
     navController: NavHostController,
 ) {
-    Box {
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Card(
-            modifier = modifier,
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFFEAEEEF)
             ),
